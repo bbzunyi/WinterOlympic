@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>UserWindow</class>
+ <widget class="QWidget" name="UserWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1280</width>
+    <height>800</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QPushButton" name="seller">
+   <property name="geometry">
+    <rect>
+     <x>290</x>
+     <y>490</y>
+     <width>271</width>
+     <height>171</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>我是卖家</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="buyer">
+   <property name="geometry">
+    <rect>
+     <x>770</x>
+     <y>490</y>
+     <width>271</width>
+     <height>171</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>我是买家</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="person_information">
+   <property name="geometry">
+    <rect>
+     <x>290</x>
+     <y>180</y>
+     <width>271</width>
+     <height>171</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>个人信息管理</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="logout">
+   <property name="geometry">
+    <rect>
+     <x>770</x>
+     <y>180</y>
+     <width>271</width>
+     <height>171</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>注销登录</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

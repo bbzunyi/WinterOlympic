@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/">
+        <file>images/startwindow.jpg</file>
+        <file>images/adminwindow.jpg</file>
+        <file>images/userwindow.jpeg</file>
+        <file>images/buyerwindow.jpg</file>
+        <file>images/sellerwindow.jpg</file>
+        <file>images/personwindow.png</file>
+        <file>images/calculatorwindow.png</file>
+    </qresource>
+</RCC>
