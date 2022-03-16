@@ -17,6 +17,7 @@ class AdminWindow : public QWidget
 public:
     explicit AdminWindow(QWidget *parent = nullptr);
     ~AdminWindow();
+    QString id;
 
 private:
     QVector<QString> search(QString str);

@@ -23,7 +23,7 @@ BanWindow::BanWindow(QWidget *parent) :
                  QString line = in.readLine();
                  User user1;
                  user1.split(line);
-                 if(user1.get_userID() == user_id){
+                 if(user1.get_userID() == user_id && user1.getstate() == "正常"){
                      user1.changeState();
                      flag = true;
                  }
@@ -32,21 +32,22 @@ BanWindow::BanWindow(QWidget *parent) :
              file.close();
         }
         if(flag){
-            QString path = "/Users/mac/Desktop/WinterOlympic/WinterOlympicStore/files/user.txt";
-            QFile file(path);
-            if (!file.open(QIODevice::WriteOnly | QIODevice::Truncate))
-                     return;
-
-             QTextStream out(&file);
-             heading += '\n';
-             out<<heading;
-             for(int i = 0; i < users.size(); i++){
-                 out<<users[i].join_str();
-             }
-             file.close();
+            QString instruction = "UPDATE commodity SET 用户状态 = 封禁 WHERE 用户ID = "+ ui->lineEdit->text();
+            QString time = QDateTime::currentDateTime().toString("yyyy-MM-dd HH:mm:ss");
+            if(1){
+                QString path = "/Users/mac/Desktop/WinterOlympic/WinterOlympicStore/files/commands.txt";
+                QFile file(path);
+                file.open(QIODevice::WriteOnly | QIODevice::Append);
+                QTextStream out(&file);
+                out << time + ": " + instruction + "\n";
+                file.close();
+            }
+            Commands com;
+            com.id = "admin";
+            com.parse_sql(instruction);
              QMessageBox* dialog = new QMessageBox(this);
              dialog->setWindowTitle("Success");
-             dialog->setText("成功改变用户状态！");
+             dialog->setText("成功封禁用户！");
              dialog->show();
              this->close();
         }else{

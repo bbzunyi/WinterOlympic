@@ -19,12 +19,16 @@ SOURCES += \
     adminwindow.cpp \
     banwindow.cpp \
     buyerwindow.cpp \
+    buywindow.cpp \
     calculator.cpp \
     calculatorwindow.cpp \
     commodity.cpp \
+    commoditydetailwindow.cpp \
+    datastructure.cpp \
     invoice.cpp \
     login.cpp \
     main.cpp \
+    modifycommoditywindow.cpp \
     modifywindow.cpp \
     personwindow.cpp \
     publishwindow.cpp \
@@ -39,12 +43,15 @@ HEADERS += \
     adminwindow.h \
     banwindow.h \
     buyerwindow.h \
+    buywindow.h \
     calculator.h \
     calculatorwindow.h \
     commodity.h \
+    commoditydetailwindow.h \
     datastructure.h \
     invoice.h \
     login.h \
+    modifycommoditywindow.h \
     modifywindow.h \
     personwindow.h \
     publishwindow.h \
@@ -59,8 +66,11 @@ FORMS += \
     adminwindow.ui \
     banwindow.ui \
     buyerwindow.ui \
+    buywindow.ui \
     calculatorwindow.ui \
+    commoditydetailwindow.ui \
     login.ui \
+    modifycommoditywindow.ui \
     modifywindow.ui \
     personwindow.ui \
     publishwindow.ui \

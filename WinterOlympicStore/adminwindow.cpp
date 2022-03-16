@@ -15,80 +15,63 @@ AdminWindow::AdminWindow(QWidget *parent) :
 
     connect(ui->CheckCommodity, &QPushButton::clicked, [this]()
     {
-        QString path = "/Users/mac/Desktop/WinterOlympic/WinterOlympicStore/files/commodity.txt";
-        QFile file(path);
-        if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
-                 return;
-         QTextStream in(&file);
-         QStandardItemModel* model = new QStandardItemModel();
-         QString title = in.readLine();
-         QStringList title_list = title.split(",");
-         model->setHorizontalHeaderLabels(title_list);
-         ui->tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-         int i = 0;
-         while (!in.atEnd()) {
-             QString line = in.readLine();
-             QStringList list = line.split(",");
-             for(int j = 0; j < 8; j++){
-                  model->setItem(i, j, new QStandardItem(list[j]));
-             }
-             i++;
-         }
-         file.close();
-         ui->tableView->setModel(model);
-         ui->tableView->show();
+        QString instruction = "SELECT * FROM commodity";
+        QString time = QDateTime::currentDateTime().toString("yyyy-MM-dd HH:mm:ss");
+        if(1){
+            QString path = "/Users/mac/Desktop/WinterOlympic/WinterOlympicStore/files/commands.txt";
+            QFile file(path);
+            file.open(QIODevice::WriteOnly | QIODevice::Append);
+            QTextStream out(&file);
+            out << time + ": " + instruction + "\n";
+            file.close();
+        }
+        Commands com;
+        com.id = "admin";
+        QStandardItemModel* model = com.parse_sql(instruction);
+        ui->tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+        ui->tableView->setModel(model);
+        ui->tableView->show();
     });
 
     connect(ui->CheckOrders, &QPushButton::clicked, [this]()
     {
-        QString path = "/Users/mac/Desktop/WinterOlympic/WinterOlympicStore/files/order.txt";
-        QFile file(path);
-        if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
-                 return;
-         QTextStream in(&file);
-         QStandardItemModel* model = new QStandardItemModel();
-         QString title = in.readLine();
-         QStringList title_list = title.split(",");
-         model->setHorizontalHeaderLabels(title_list);
-         ui->tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-         int i = 0;
-         while (!in.atEnd()) {
-             QString line = in.readLine();
-             QStringList list = line.split(",");
-             for(int j = 0; j < 7; j++){
-                  model->setItem(i, j, new QStandardItem(list[j]));
-             }
-             i++;
-         }
-         file.close();
-         ui->tableView->setModel(model);
-         ui->tableView->show();
+        QString instruction = "SELECT * FROM order";
+        QString time = QDateTime::currentDateTime().toString("yyyy-MM-dd HH:mm:ss");
+        if(1){
+            QString path = "/Users/mac/Desktop/WinterOlympic/WinterOlympicStore/files/commands.txt";
+            QFile file(path);
+            file.open(QIODevice::WriteOnly | QIODevice::Append);
+            QTextStream out(&file);
+            out << time + ": " + instruction + "\n";
+            file.close();
+        }
+        Commands com;
+        com.id = "admin";
+        QStandardItemModel* model = com.parse_sql(instruction);
+        ui->tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+        ui->tableView->setModel(model);
+        ui->tableView->show();
+
     });
 
     connect(ui->Check_users, &QPushButton::clicked, [this]()
     {
-        QString path = "/Users/mac/Desktop/WinterOlympic/WinterOlympicStore/files/user.txt";
-        QFile file(path);
-        if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
-                 return;
-         QTextStream in(&file);
-         QStandardItemModel* model = new QStandardItemModel();
-         QString title = in.readLine();
-         QStringList title_list = title.split(",");
-         model->setHorizontalHeaderLabels(title_list);
-         ui->tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-         int i = 0;
-         while (!in.atEnd()) {
-             QString line = in.readLine();
-             QStringList list = line.split(",");
-             for(int j = 0; j < 7; j++){
-                  model->setItem(i, j, new QStandardItem(list[j]));
-             }
-             i++;
-         }
-         file.close();
-         ui->tableView->setModel(model);
-         ui->tableView->show();
+        QString instruction = "SELECT * FROM user";
+        QString time = QDateTime::currentDateTime().toString("yyyy-MM-dd HH:mm:ss");
+        if(1){
+            QString path = "/Users/mac/Desktop/WinterOlympic/WinterOlympicStore/files/commands.txt";
+            QFile file(path);
+            file.open(QIODevice::WriteOnly | QIODevice::Append);
+            QTextStream out(&file);
+            out << time + ": " + instruction + "\n";
+            file.close();
+        }
+        Commands com;
+        com.id = "admin";
+        QStandardItemModel* model = com.parse_sql(instruction);
+        ui->tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+        ui->tableView->setModel(model);
+        ui->tableView->show();
     });
 
     connect(ui->logout, &QPushButton::clicked, [this]()
@@ -101,6 +84,7 @@ AdminWindow::AdminWindow(QWidget *parent) :
     connect(ui->pull, &QPushButton::clicked, []()
     {
         PullCommodity*w = new PullCommodity();
+        w->UserID = "ADMIN";
         w->show();
     });
 
@@ -112,19 +96,20 @@ AdminWindow::AdminWindow(QWidget *parent) :
 
     connect(ui->search, &QPushButton::clicked, [this]()
     {
-        QVector<QString> vec = search(ui->lineEdit->text());
-        QStandardItemModel* model = new QStandardItemModel();
-        QString title = "商品ID,名称,价格,数量,描述,卖家ID,上架时间,商品状态";
-        QStringList title_list = title.split(",");
-        model->setHorizontalHeaderLabels(title_list);
-        ui->tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-        for(int i = 0; i < vec.size(); i++){
-            QString line = vec[i];
-            QStringList list = line.split(",");
-            for(int j = 0; j < 8; j++){
-                 model->setItem(i, j, new QStandardItem(list[j]));
-            }
+        QString instruction = "SELECT * FROM commodity WHERE 名称 CONTAINS "+ ui->lineEdit->text();
+        QString time = QDateTime::currentDateTime().toString("yyyy-MM-dd HH:mm:ss");
+        if(1){
+            QString path = "/Users/mac/Desktop/WinterOlympic/WinterOlympicStore/files/commands.txt";
+            QFile file(path);
+            file.open(QIODevice::WriteOnly | QIODevice::Append);
+            QTextStream out(&file);
+            out << time + ": " + instruction + "\n";
+            file.close();
         }
+        Commands com;
+        com.id = "admin";
+        QStandardItemModel* model = com.parse_sql(instruction);
+        ui->tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
         ui->tableView->setModel(model);
         ui->tableView->show();
     });

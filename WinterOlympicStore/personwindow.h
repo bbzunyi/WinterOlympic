@@ -15,6 +15,7 @@ public:
     explicit PersonWindow(QWidget *parent = nullptr);
     ~PersonWindow();
     QString UserID;
+    QString calculate_balance();
 private:
     Ui::PersonWindow *ui;
 };

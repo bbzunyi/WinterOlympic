@@ -14,7 +14,7 @@ class PullCommodity : public QWidget
 public:
     explicit PullCommodity(QWidget *parent = nullptr);
     ~PullCommodity();
-
+    QString UserID;
 private:
     Ui::PullCommodity *ui;
 };

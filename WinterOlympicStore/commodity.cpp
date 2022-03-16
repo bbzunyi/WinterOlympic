@@ -24,3 +24,16 @@ void Commodity::split(QString str){
     addedDate = list[6];//yyyy-mm-dd
     state = list[7];
 }
+
+QStringList Commodity::check_selfinformation(){
+    QStringList list;
+    number_str = QString::number(number,'f',1);
+    QString s1 = "名称："+this->commodityName;
+    QString s2 = "价格："+this->price;
+    QString s3 = "数量："+ this->number_str;
+    QString s4 = "描述："+this->description;
+    QString s5 = "卖家ID："+this->sellerID;
+    QString s6 = "上架时间："+this->addedDate;
+    list<<s1<<s2<<s3<<s4<<s5<<s6;
+    return list;
+}

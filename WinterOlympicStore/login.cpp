@@ -14,6 +14,7 @@ Login::Login(QWidget *parent) :
     ui->password->setFont(QFont("黑体",30));
     ui->ID->setFont(QFont("黑体",30));
     ui->title->setFont(QFont("幼圆",50));
+    ui->pwInput->setEchoMode(QLineEdit::Password);
 
     connect(ui->login_button, &QPushButton::clicked, [this]()//用户登陆或管理员登陆
     {
@@ -23,6 +24,7 @@ Login::Login(QWidget *parent) :
         if(isExisted(user1)){
             if(user1.id == "admin" && user1.password == "123456"){
                         AdminWindow*w = new AdminWindow;
+                        w->id = "admin";
                         w->show();
                         this->close();
             }else if(isPasswordRight(user1)){

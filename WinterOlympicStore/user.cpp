@@ -32,9 +32,9 @@ void User::modify(QString name,QString phonenumber,QString address){
     this->address = address;
 }
 
-QStringList User::check_selfinformation(){
+QStringList User::check_selfinformation(double balance1){
     QStringList list;
-    balance_string = QString::number(balance,'f',1);
+    balance_string = QString::number(balance1,'f',1);
     QString s1 = "用户名："+this->username;
     QString s2 = "联系方式："+this->phoneNumber;
     QString s3 = "地址："+this->address;

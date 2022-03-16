@@ -7,9 +7,7 @@ PullCommodity::PullCommodity(QWidget *parent) :
 {
     ui->setupUi(this);
     connect(ui->ok, &QPushButton::clicked, [this](){
-        QVector<Commodity> commodities;
         QString commodity_id = ui->lineEdit->text();
-        QString heading;
         bool flag = false;
         if(1){
             QString path = "/Users/mac/Desktop/WinterOlympic/WinterOlympicStore/files/commodity.txt";
@@ -18,32 +16,33 @@ PullCommodity::PullCommodity(QWidget *parent) :
                      return;
 
              QTextStream in(&file);
-             heading = in.readLine();
              while (!in.atEnd()) {
                  QString line = in.readLine();
                  Commodity commodity1;
                  commodity1.split(line);
                  if(commodity1.getCommodityID() == commodity_id){
-                     commodity1.changeState();
-                     flag = true;
+                     if(commodity1.getState() == "销售中" && (UserID == "ADMIN" || commodity1.getSellerID() == this->UserID)){
+                         commodity1.changeState();
+                         flag = true;
+                     }
                  }
-                 commodities.push_back(commodity1);
              }
              file.close();
         }
         if(flag){
-            QString path = "/Users/mac/Desktop/WinterOlympic/WinterOlympicStore/files/commodity.txt";
-            QFile file(path);
-            if (!file.open(QIODevice::WriteOnly | QIODevice::Truncate))
-                     return;
-
-             QTextStream out(&file);
-             heading += '\n';
-             out<<heading;
-             for(int i = 0; i < commodities.size(); i++){
-                 out<<commodities[i].join_str();
-             }
-             file.close();
+            QString instruction = "UPDATE commodity SET 商品状态 = 已下架 WHERE 商品ID = "+ ui->lineEdit->text();
+            QString time = QDateTime::currentDateTime().toString("yyyy-MM-dd HH:mm:ss");
+            if(1){
+                QString path = "/Users/mac/Desktop/WinterOlympic/WinterOlympicStore/files/commands.txt";
+                QFile file(path);
+                file.open(QIODevice::WriteOnly | QIODevice::Append);
+                QTextStream out(&file);
+                out << time + ": " + instruction + "\n";
+                file.close();
+            }
+            Commands com;
+            com.id = "admin";
+            com.parse_sql(instruction);
              QMessageBox* dialog = new QMessageBox(this);
              dialog->setWindowTitle("Success");
              dialog->setText("成功改变商品状态！");

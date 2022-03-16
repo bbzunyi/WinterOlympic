@@ -26,6 +26,9 @@ public:
             userState = "正常";
         }
     }
+    QString getstate(){
+        return userState;
+    }
     QString join_str();//用成员变量生成QString
     void split(QString str);//用QString给成员变量赋值
     void top_up(double money);//充值
@@ -52,7 +55,7 @@ public:
     QString get_phonenumber(){
         return phoneNumber;
     }
-    QStringList check_selfinformation();
+    QStringList check_selfinformation(double number);
     void AddBalance(double num){
         this->balance += num;
     }

@@ -2,7 +2,9 @@
 #define BUYERWINDOW_H
 
 #include <QWidget>
-
+#include "datastructure.h"
+#include "commodity.h"
+#include "commoditydetailwindow.h"
 namespace Ui {
 class BuyerWindow;
 }
@@ -15,7 +17,7 @@ public:
     explicit BuyerWindow(QWidget *parent = nullptr);
     ~BuyerWindow();
     QString UserId;
-
+    QVector<QString> search(QString str);
 private:
     Ui::BuyerWindow *ui;
 };
