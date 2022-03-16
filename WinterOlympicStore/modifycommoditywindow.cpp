@@ -1,6 +1,43 @@
 #include "modifycommoditywindow.h"
 #include "ui_modifycommoditywindow.h"
 #include "commodity.h"
+bool isLegal(QString name,QString price,QString description){
+    if(!is_Num(price)){
+        return false;
+    }
+    int nCount = name.count();
+    if(nCount > 20){
+        QErrorMessage *dialog = new QErrorMessage();
+        dialog->setWindowTitle("Error");
+        dialog->showMessage("商品名不能超过二十个字符！");
+        return false;
+    }
+    for(int i = 0 ; i < nCount ; i++)
+    {
+        QChar cha = name.at(i);
+        ushort uni = cha.unicode();
+        if((cha>='a' && cha <= 'z') || (cha>='A' && cha <= 'Z') || (uni >= 0x4E00 && uni <= 0x9FA5))
+        {
+
+        } else{
+            QErrorMessage *dialog = new QErrorMessage();
+            dialog->setWindowTitle("Error");
+            dialog->showMessage("商品名只能包含中文字符和英文字母！");
+            return false;
+        }
+    }
+
+    nCount = description.count();
+    if(nCount > 200){
+        QErrorMessage *dialog = new QErrorMessage();
+        dialog->setWindowTitle("Error");
+        dialog->showMessage("密码不能超过20个字符！");
+        return false;
+    }
+
+    return true;
+
+}
 ModifyCommodityWindow::ModifyCommodityWindow(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::ModifyCommodityWindow)
@@ -43,6 +80,9 @@ ModifyCommodityWindow::ModifyCommodityWindow(QWidget *parent) :
     });
 
     connect(ui->ok, &QPushButton::clicked, [this](){
+        if(!isLegal(ui->name->text(),ui->price->text(),ui->description->text())){
+            return ;
+        }
         QString instruction = "UPDATE commodity SET 描述=" + ui->description->text() + ",名称=" + ui->name->text()+",价格=" + ui->price->text()+" WHERE 商品ID = "+ui->ID->text();
         QString time = QDateTime::currentDateTime().toString("yyyy-MM-dd HH:mm:ss");
         if(1){

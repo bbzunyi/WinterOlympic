@@ -2,6 +2,30 @@
 #include "commodity.h"
 #include "user.h"
 #include "invoice.h"
+bool is_Num(QString number){
+    int point_num = 0;
+    int point_pos = -1;
+    for(int i = 0; i < number.count(); i++){
+        if(number[i] == '.'){
+            point_num++;
+            point_pos = i;
+        }
+        if(((number[i] < '0' || number[i] > '9') && (number[i] != '.')) || point_num > 1){
+            QErrorMessage *dialog = new QErrorMessage();
+            dialog->setWindowTitle("Error");
+            dialog->showMessage("请输入正确的数字！");
+            return false;
+        }
+
+    }
+    if(point_pos != -1 && number.count() - point_pos != 2){
+        QErrorMessage *dialog = new QErrorMessage();
+        dialog->setWindowTitle("Error");
+        dialog->showMessage("请输入正确的数字！");
+        return false;
+    }
+    return true;
+}
 QVector<QString> admin_search(QString str){
     QVector<QString> vec;
     QString path = "/Users/mac/Desktop/WinterOlympic/WinterOlympicStore/files/commodity.txt";

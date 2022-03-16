@@ -26,7 +26,7 @@ struct top_up{
     double amount;
     QString Date;
 };
-
+extern bool is_Num(QString number);
 class Commands{
 public:
     QStandardItemModel* select_admin(QString table);

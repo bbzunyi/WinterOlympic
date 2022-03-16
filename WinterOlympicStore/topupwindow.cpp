@@ -1,6 +1,7 @@
 #include "topupwindow.h"
 #include "ui_topupwindow.h"
 #include "user.h"
+#include "datastructure.h"
 topupWindow::topupWindow(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::topupWindow)
@@ -8,6 +9,9 @@ topupWindow::topupWindow(QWidget *parent) :
     ui->setupUi(this);
     ui->label->setFont(QFont("黑体",30));
     connect(ui->ok, &QPushButton::clicked, [this](){
+        if(!is_Num(ui->lineEdit->text())){
+            return;
+        }
         double number = ui->lineEdit->text().toDouble();
         QVector<User> users;
         QVector<top_up> records;

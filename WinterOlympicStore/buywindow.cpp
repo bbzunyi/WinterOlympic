@@ -11,7 +11,16 @@ BuyWindow::BuyWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     connect(ui->ok, &QPushButton::clicked, [this](){
+        QString num = ui->number->text();
+        for(int i = 0; i < num.count(); i++){
+            if(num[i] < '0' || num[i] > '9'){
+                QErrorMessage *dialog = new QErrorMessage();
+                dialog->setWindowTitle("Error");
+                dialog->showMessage("请输入正确的数字！");
+                return;
+            }
 
+        }
         QString commodity_id = ui->ID->text();
         int number = ui->number->text().toInt();
         QString heading;

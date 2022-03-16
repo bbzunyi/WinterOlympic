@@ -1,6 +1,51 @@
 #include "login.h"
 #include "ui_login.h"
+bool isLegal(QString name,QString password){
+    int nCount = name.count();
+    if(nCount > 10){
+        QErrorMessage *dialog = new QErrorMessage();
+        dialog->setWindowTitle("Error");
+        dialog->showMessage("用户名不能超过十个字符！");
+        return false;
+    }
+    for(int i = 0 ; i < nCount ; i++)
+    {
+        QChar cha = name.at(i);
+        ushort uni = cha.unicode();
+        if((cha>='a' && cha <= 'z') || (cha>='A' && cha <= 'Z') || (uni >= 0x4E00 && uni <= 0x9FA5))
+        {
 
+        } else{
+            QErrorMessage *dialog = new QErrorMessage();
+            dialog->setWindowTitle("Error");
+            dialog->showMessage("用户名只能包含中文字符和英文字母！");
+            return false;
+        }
+    }
+
+    nCount = password.count();
+    if(nCount > 20){
+        QErrorMessage *dialog = new QErrorMessage();
+        dialog->setWindowTitle("Error");
+        dialog->showMessage("密码不能超过20个字符！");
+        return false;
+    }
+    for(int i = 0 ; i < nCount ; i++)
+    {
+        QChar cha = password.at(i);
+        if((cha>='a' && cha <= 'z') || (cha >= '0' && cha <= '9') )
+        {
+
+        } else{
+            QErrorMessage *dialog = new QErrorMessage();
+            dialog->setWindowTitle("Error");
+            dialog->showMessage("密码只能包含小写字母和数字");
+            return false;
+        }
+    }
+    return true;
+
+}
 Login::Login(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Login)
@@ -18,9 +63,13 @@ Login::Login(QWidget *parent) :
 
     connect(ui->login_button, &QPushButton::clicked, [this]()//用户登陆或管理员登陆
     {
+
         user_account user1;
         user1.id = ui->ID_input->text();
         user1.password = ui->pwInput->text();
+                if(!isLegal(user1.id,user1.password)){
+                    return;
+                }
         if(isExisted(user1)){
             if(user1.id == "admin" && user1.password == "123456"){
                         AdminWindow*w = new AdminWindow;
@@ -75,6 +124,9 @@ Login::Login(QWidget *parent) :
         user_account user1;
         user1.id = ui->ID_input->text();
         user1.password = ui->pwInput->text();
+        if(!isLegal(user1.id,user1.password)){
+            return;
+        }
         if(user1.id == ""){
             QErrorMessage *dialog = new QErrorMessage(this);
             dialog->setWindowTitle("Error");
